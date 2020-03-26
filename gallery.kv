@@ -1,0 +1,163 @@
+#: import icon kivy.garden.iconfonts.icon
+#: import Window kivy.core.window.Window
+#: import Factory kivy.factory.Factory
+#:import utils kivy.utils
+
+<About@ModalView>:
+    size_hint: (.7, .5)
+    Label:
+        text:"[b][i]Petrescu Stefan[/i] -- Image Editor App[/b]\n\n"
+        markup: True
+        halign: 'center'
+        valign: 'middle'
+        color:(0.839, 0.851, 0.231, 1)
+
+<ImgCard@ButtonBehavior+BoxLayout>:
+    im_source: ''
+    im_caption: ''
+    orientation: 'vertical'
+    on_release: app.root.viewimg(self)
+    Image: 
+        source: root.im_source
+        size_hint_y: .9
+    Label:
+        text: root.im_caption
+        size_hint_y: .1
+
+<FlatButton@ButtonBehavior+Label>:
+    color: (0, 0, 0, 1)
+
+<GalleryWindow>:
+    id: main_win
+    orientation: 'vertical'
+    file_dropdown: file_dropdown.__self__
+    more_dropdown: more_dropdown.__self__
+    ScreenManager:
+        id: scrn_mngr
+        Screen:
+            id: scrn_media
+            name: 'scrn_media'
+            BoxLayout:
+                id: main_media
+                orientation: 'vertical'
+                
+                BoxLayout:
+                    id: top_nav
+                    size_hint_y: None
+                    height: 35
+                    canvas.before:
+                        Color:
+                            rgba:(0.839, 0.851, 0.231, 1)
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    FlatButton:
+                        id: file_trigger
+                        text: '[b]File[/b]'
+                        size_hint: (.2, None)
+                        height: 30
+                        markup: True
+                        on_release: file_dropdown.open(self)
+                        
+                        Widget:
+                            on_parent: file_dropdown.dismiss()
+
+                            DropDown:
+                                id: file_dropdown
+                                Button:
+                                    id: open_img
+                                    text: 'Open Image'
+                                    size_hint_y: None
+                                    height: 30
+                                    on_release: scrn_mngr.current = 'scrn_open'
+                                    on_release: scrn_open.trigger = 'image'
+                                    background_normal: ''
+                                    background_color: (.4, .4, .4, .7)
+                                    color:(0.839, 0.851, 0.231, 1)
+                                Button:
+                                    id: open_folder
+                                    text:'Open Folder'
+                                    markup: True
+                                    size_hint_y: None
+                                    height:30
+                                    background_normal: ''
+                                    background_color: (.4, .4, .4, .7)
+                                    on_release: scrn_mngr.current = 'scrn_open'
+                                    color:(0.839, 0.851, 0.231, 1)
+                    Label:
+                        id: title
+                        text: '[i]-- Image Editor App --[/i]'
+                        size_hint: (.6, None)
+                        color: (0,0,0,1)
+                        height: 30
+                        markup: True
+                        bold: True
+                    FlatButton:
+                        id: more_trigger
+                        text: '[b]More[/b]'
+                        size_hint: (.2, None)
+                        height: 30
+                        markup: True
+                        on_release: more_dropdown.open(self)
+
+                        Widget:
+                            on_parent: more_dropdown.dismiss()
+
+                            DropDown:
+                                id: more_dropdown
+                                Button:
+                                    id: open_about
+                                    text: 'About'
+                                    size_hint_y: None
+                                    height: 30
+                                    background_normal: ''
+                                    background_color: (.4, .4, .4, .7)
+                                    on_release: Factory.About().open(self)
+                                    color:(0.839, 0.851, 0.231, 1)
+                                Button:
+                                    id: open_folder
+                                    text:'Quit'
+                                    size_hint_y: None
+                                    height:30
+                                    background_normal: ''
+                                    background_color: (.4, .4, .4, .7)
+                                    on_release: Window.close()
+                                    color:(0.839, 0.851, 0.231, 1)
+                RecycleView:
+                    id: img_base
+                    viewclass: 'ImgCard'
+                    canvas.before:
+                         #$#Color:
+                         #$rgba: (.4, .4, .4, .7)
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                            source: 'assets/camera_blackW.jpg'
+                    RecycleGridLayout:  
+                        default_size: (None, 250)
+                        default_size_hint: (1, None)
+                        size_hint_y: None
+                        height: self.minimum_height
+                        spacing: 10 
+                        cols: 3
+        Screen:
+            id: scrn_open
+            name: 'scrn_open'
+            trigger: ''
+
+            BoxLayout:
+                orientation:'vertical'
+                BoxLayout:
+                    size_hint_y: None
+                    height: 35
+                    TextInput:
+                        id: current_path
+                        text: chooser.selection[0] if scrn_open.trigger == 'image' and len(chooser.selection) > 0 else chooser.path
+                        size_hint_x: .8
+                    Button:
+                        id: submit
+                        text: 'Open...'
+                        size_hint_x: .2
+                        on_release: root.get_image(current_path.text) if scrn_open.trigger == 'image' else root.get_folder(current_path.text)
+                FileChooserIconView:
+                    id: chooser
