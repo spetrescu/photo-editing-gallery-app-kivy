@@ -1,4 +1,5 @@
 # photo-editing-image-gallery-app-kivy
+<img src="assets/sys_demo.png" alt="drawing" width="300"/> <img src="assets/sys_demo_3.png" alt="drawing" width="300"/> <img src="assets/sys_demo_2.png" alt="drawing" width="300"/>  <br>
 Cross-platform aplication developed in Kivy. <br>
 ## Functionalities:
 - create image gallery from image folder
@@ -9,5 +10,5 @@ Cross-platform aplication developed in Kivy. <br>
 1. `pip install -r requirements.txt`
 2. `python main.py`
 
-## Debug
-When running `python main.py` you might get `KeyError: 'kivy.garden.iconfonts'`. In this case run `garden install iconfonts` and then running `python main.py` should work. 
+#### Debug
+- Possible Issue: If `python main.py` returns `KeyError: 'kivy.garden.iconfonts'` => Run `garden install iconfonts` => Now `python main.py` should work.
