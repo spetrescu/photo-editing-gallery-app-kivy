@@ -1,0 +1,4 @@
+opencv_python_headless==4.5.1.48
+Kivy==2.0.0
+numpy==1.19.5
+Pillow==8.2.0
