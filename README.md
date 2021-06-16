@@ -1,5 +1,5 @@
 # photo-editing-image-gallery-app-kivy
-<img src="assets/sys_demo.png" alt="drawing" width="300"/> <img src="assets/sys_demo_3.png" alt="drawing" width="300"/> <img src="assets/sys_demo_2.png" alt="drawing" width="300"/>  <br>
+<img src="assets/sys_demo.png" alt="drawing" width="200"/> <img src="assets/sys_demo_3.png" alt="drawing" width="200"/> <img src="assets/sys_demo_2.png" alt="drawing" width="200"/>  <br>
 Cross-platform aplication developed in Kivy. <br>
 ## Functionalities:
 - create image gallery from image folder
